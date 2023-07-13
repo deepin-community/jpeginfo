@@ -1,5 +1,144 @@
-template-repository (1.0-1) unstable; urgency=medium
+jpeginfo (1.7.0-1) unstable; urgency=medium
 
-  * Initial release
+  * New upstream version
+    Closes: #308294, #260337
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Andreas Tille <tille@debian.org>  Mon, 16 Jan 2023 10:17:00 +0100
+
+jpeginfo (1.6.2-1) unstable; urgency=medium
+
+  * New upstream version
+  * Standards-Version: 4.6.2 (routine-update)
+
+ -- Andreas Tille <tille@debian.org>  Sun, 08 Jan 2023 17:30:25 +0100
+
+jpeginfo (1.6.1-1) unstable; urgency=medium
+
+  [ Andreas Tille ]
+  * New upstream version
+    Closes: #695524
+  * Move package to Debian PhotoTools Maintainers
+  * d/control: Add Homepage
+  * debian/source/format: quilt (3.0)
+  * Add watch file
+  * DEP5
+  * d/rules: short dh
+    Closes: #999153
+  * debhelper-compat 13
+    Closes: #965606
+  * Standards-Version: 4.6.0 (routine-update)
+  * Add salsa-ci file (routine-update)
+  * Rules-Requires-Root: no (routine-update)
+
+  [ Mathieu Malaterre ]
+  * Better long description clarifying limitations of the program
+    Closes: #825498
+
+  [ Helmut Grohne ]
+  * Fix FTCBFS: Export a suitable CC for ./configure.
+    Closes: #901985
+
+ -- Andreas Tille <tille@debian.org>  Wed, 15 Dec 2021 22:38:17 +0100
+
+jpeginfo (1.6.0-6) unstable; urgency=low
+
+  * Applied patch from Breno Leitao <brenohl@br.ibm.com> that solve a
+    few FTBFS on new architectures. Closes: #753491.
+
+ -- Ola Lundqvist <opal@debian.org>  Sat, 26 Jul 2014 23:54:10 +0200
+
+jpeginfo (1.6.0-5) unstable; urgency=low
+
+  * Changed build dependency to help libjpeg transition. Closes:
+    #642984.
+  * UTF-8 encoded copyright file.
+  * Updated to standards version 3.9.1.
+  * Added ${misc:Depends} to dependency chain as debhelper may add it.
+  * Updated from debhelper compatibility 4 to 6.
+  * Makeshlibs and gencontrol changed order in debian rules file.
+
+ -- Ola Lundqvist <opal@debian.org>  Mon, 17 Oct 2011 08:11:02 +0200
+
+jpeginfo (1.6.0-4) unstable; urgency=low
+
+  * Corrected url and year in copyright file, closes: #404750.
+  * Updated standards version to 3.7.2 in control file (no other changes).
+
+ -- Ola Lundqvist <opal@debian.org>  Thu, 28 Dec 2006 18:03:34 +0100
+
+jpeginfo (1.6.0-3) unstable; urgency=low
+
+  * Corrected 342423 the right way, closes: #342423.
+
+ -- Ola Lundqvist <opal@debian.org>  Tue, 14 Mar 2006 20:22:38 +0100
+
+jpeginfo (1.6.0-2) unstable; urgency=low
+
+  * Corrected manpage spelling error. Thanks to
+    A Costa <agcosta@gis.net>, closes: #311447.
+  * Now config.guess and config.sub is updated in clean target,
+    closes: #342423.
+  * Updated standards version from 3.5.8 to 3.6.2.
+  * Updated to debhelper 4 compatibility.
+  * Updated FSF address in debian/copyright.
+
+ -- Ola Lundqvist <opal@debian.org>  Mon, 13 Mar 2006 21:02:39 +0100
+
+jpeginfo (1.6.0-1) unstable; urgency=low
+
+  * New maintainer, closes: #174340, #105118.
+  * New upstream version, closes: #174339.
+  * Updated to latest standards version 3.5.8 from 3.0.1.
+  * Updated copyright file to contain a correct reference to GPL.
+  * Removed full stop from short description.
+  * Rewritten the rules file almost from scratch.
+  * Removed obsolete emacs settings from changelog (below).
+
+ -- Ola Lundqvist <opal@debian.org>  Sat, 28 Dec 2002 12:17:39 +0100
+
+jpeginfo (1.5a-1.1) unstable; urgency=low
+
+  * NMU
+  * debian/control: added Build-Depends
+    - debhelper (Closes: #105118)
+    - libjpeg62-dev
+  * debian/rules: remove call of dh_suidregister
+  * aux/config.{guess,sub}: updated from current libtool
+  * misc.c: added #include <string.h> to get strlen prototype
+
+ -- Branden Robinson <branden@debian.org>  Fri, 20 Jul 2001 11:18:00 -0500
+
+jpeginfo (1.5a-1) unstable; urgency=low
+
+  * New upstream release.
+  * Updated `Standards-Version' to 3.0.1.
+  * Moved docs under /usr/share.
+  * Changes to description.
+  * Updated copyright file.
+  * Modifications to debian/rules.
+
+ -- Nicolas Lichtmaier <nick@debian.org>  Sun,  3 Oct 1999 03:56:05 -0300
+
+jpeginfo (1.4-3) unstable; urgency=low
+
+  * Switched to debhelper.
+  * Compressed changelogs (closes: Bug#35373).
+  * Updated maintainer address.
+  * Changed Standards-Version to 2.5.0.
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Tue,  6 Jul 1999 02:07:50 -0300
+
+jpeginfo (1.4-2) unstable; urgency=low
+
+  * Removed README and put that information in changelog and copyright.
+  * Changed maintainer's address.
+  * Built with libc6's libjpeg, fixes #13024.
+
+ -- Nicolás Lichtmaier <nick@feedback.net.ar>  Sun, 28 Sep 1997 14:45:53 -0300
+
+jpeginfo (1.4-1) unstable; urgency=low
+
+  * Keep files' date.
+  * Initial Release.
+
+ -- Nicolás Lichtmaier <nick@feedback.com.ar>  Mon,  1 Sep 1997 07:23:23 -0300

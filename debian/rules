@@ -1,4 +1,18 @@
 #!/usr/bin/make -f
 
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+DPKG_EXPORT_BUILDTOOLS=1
+-include /usr/share/dpkg/buildtools.mk
+
 %:
 	dh $@
+
+override_dh_installchangelogs:
+	sed -ne '/HIST/,/^$$/p' < README > changelog.tmp
+	touch --reference README changelog.tmp
+	dh_installchangelogs changelog.tmp
+
+override_dh_auto_install:
+	echo "Install files manually"
