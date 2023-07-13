@@ -1,0 +1,253 @@
+.TH JPEGINFO 1 "15 Jan 2023"
+.UC 4
+.SH NAME
+jpeginfo \- prints
+information and tests integrity of JPEG/JFIF files.
+
+.SH SYNOPSIS
+.B jpeginfo
+[
+.B options
+] [
+.B filenames
+]
+
+.SH DESCRIPTION
+.I jpeginfo
+is used to generate informative listings of jpeg files, and
+also to check jpeg files for errors. Program also supports automatic
+deletion of broken jpegs.
+
+.SH OUTPUT FORMATS
+.I jpeginfo
+supports several different output formats. Default formats are meant to be displayed
+on screen, while there is also CSV and JSON formats that are easier to parse by another program.
+
+.PP
+While CSV and JSON formats always display all "columns", other formats don't display columns that
+do not have any data. For example if
+.I -c
+option is not used to check JPEG integrity, then the `status` (and `details`) columns won't be displayed.
+
+.PP
+Similarly if MD5/SHA-2 checksum (hash) is not calculated, then that column will not be shown.
+
+.SS Default Format
+.PP
+Default output format:
+
+<filename> <image_width> x <image_height> <colordepth> <progresive_vs_normal> <markers> <size>
+
+Example:
+.PP
+.RS 0
+$ jpeginfo *.jpeg
+.RS 0
+IMG_1439.jpeg                    3282 x 3024 24bit N JFIF,Exif                2961607
+.RS 0
+IMG_1560.jpeg                    3815 x 2862 24bit N JFIF                     1045063
+.RS 0
+IMG_2520.jpeg                    3964 x 2900 24bit N JFIF,Exif,ICC            4712099
+.RS 0
+.RE
+
+.SS Extra information format
+.PP
+Additional information can be displayed using
+.I -i
+option:
+
+<filename> <image_width> x <image_height> <colordepth> <progresive_vs_normal> <markers> <extra_info> <size>
+
+Example:
+.PP
+.RS 0
+$ jpeginfo -i *.jpeg
+.RS 0
+IMG_1439.jpeg                    3282 x 3024 24bit N JFIF,Exif                Huffman,300dpi       2961607
+.RS 0
+IMG_1560.jpeg                    3815 x 2862 24bit N JFIF                     Huffman,300dpi       1045063
+.RS 0
+IMG_2520.jpeg                    3964 x 2900 24bit N JFIF,Exif,ICC            Huffman,300dpi       4712099
+.RS 0
+.RE
+
+.SS Ls command style output format
+.PP
+Option
+.I -l
+moves filename to be last column, resulting output that is bit like output from `ls -l` command:
+
+<image_width> x <image_height> <colordepth> <progresive_vs_normal> <markers> <size> <filename>
+
+Example:
+
+.PP
+.RS 0
+$ jpeginfo -l *.jpeg
+.RS 0
+3282 x 3024 24bit N JFIF,Exif                2961607 IMG_1439.jpeg
+.RS 0
+3815 x 2862 24bit N JFIF                     1045063 IMG_1560.jpeg
+.RS 0
+3964 x 2900 24bit N JFIF,Exif,ICC            4712099 IMG_2520.jpeg
+.RS 0
+.RE
+
+.SH OPTIONS
+.PP
+Options may be either the traditional POSIX one letter options, or the
+GNU style long options.  POSIX style options start with a single
+``\-'', while GNU long options start with ``\-\^\-''.
+
+Options offered by
+.I jpeginfo
+are the following:
+.TP 0.6i
+.B -c, --check
+Check files also for errors. (default is just to read the headers).
+.TP 0.6i
+.B -C, --comments
+Display file comments (from COM markers).
+.TP 0.6i
+.B -d, --delete
+Delete files that have errors. (default is not to delete any files).
+.TP 0.6i
+.B -f<filename>, --file<filename>
+Read filenames to process from given file. To use standard input (stdin)
+use '-' as a filename. This is alternative to default where filenames
+are given as parameters to the program.
+.TP 0.6i
+.B -h, --help
+Display short usage information and exits.
+.TP 0.6i
+.B -H, --header
+Display column names header in output.
+.TP 0.6i
+.B -2, --sha256
+Calculates SHA-256 checksum for each file.
+.TP 0.6i
+.B --sha512
+Calculates SHA-512 checksum for each file.
+.TP 0.6i
+.B -5, --md5
+Calculates MD5 checksum for each file.
+.TP 0.6i
+.B -i, --info
+Displays even more information about each picture. Prints image coding
+(Huffman/Arithmetic), density (in dpi/dpc), and whether CCIR601 sampling
+was used or not.
+.TP 0.6i
+.B -j, --json
+JavaScript Object Notation (JSON) output format.
+.TP 0.6i
+.B -l, --lsstyle
+Uses alternate listing format (ls -l style).
+.TP 0.6i
+.B -v, --verbose
+Enables verbose mode (positively chatty).
+.TP 0.6i
+.B --version
+Displays program version.
+.TP 0.6i
+.B -q, --quiet
+Quiet mode, output just the jpeg infos.
+.TP 0.6i
+.B -s, --csv
+Comma separated values (CSV) output format.
+.TP 0.6i
+.B -m<mode>, --mode=<mode>
+Sets the delete mode, meaningful only when used with
+.I
+-d
+flag.
+.I Mode
+can be one of the following:
+.RS
+.TP
+.B all
+Files containing any type of errors/warnings, not necessary preventing
+the decoding. (default)
+.TP
+.B erronly
+Only files with serious errors (ie. cannot be decoded at all).
+.RE
+.TP 0.6i
+.B -, --stdin
+Read input from standard input (instead of a file).
+
+
+.SH Known JPEG Markers
+.I jpegoptim
+scans through application (APP) markers in the JPEG image and will display information about "well known" markers
+found in the image. Markers found in image are listed in the "markers" column.
+
+.SS Known Application Markers
+
+Currently
+.I jpegoptim
+recognizes following common application markers found in JPEG images:
+.RS 1.2i
+.TS
+tab(@), left, box;
+c | c
+lB | l.
+Marker Name@Description
+_
+JFIF@JPEG File Interchange Format
+JFXX@JFIF Extension
+Exif@Exchangeable Image File Format
+XMP@Extensible Metadata Platform (Adobe)
+ICC@ICC Color Profile
+IPTC@IPTC (Adobe Photoshop)
+Adobe@Adobe
+AdobeCM@Adobe Color Management
+CIFF@Canon Raw
+AVI1@AVI Video
+QVCI@Casio QVCI
+FLIR@FLIR
+FPXR@Kodak FlashPix
+MPF@CIPA Multi-Picture Format
+Meta@Kodak Meta
+Stim@CIPA Stereo Still Image
+JPS@JPEG Stereo Image
+Scalado@Scalado
+RMETA@Ricoh Meta
+EPPIM@Toshiba PrintIM
+NITF@National Imagery Transmission Format
+GoPro@GoPro
+SPIFF@JPEG Still Picture Interchange File Format
+AROT@Apple
+HDR@JPEG-HDR
+.TE
+.RE
+
+.SS Other Markers
+.PP
+If image contained any unrecognized application (APP) markers then "UNKNOWN" is added to the list of found markers.
+.PP
+Additionally if image contained any comment (COM) markers then "COM" is added to the list of found markers.
+
+
+
+
+.SH "SEE ALSO"
+jpegoptim(1)
+
+.SH AUTHOR
+Timo Kokkonen (tjko@iki.fi)
+
+.SH COPYING
+Copyright (C) 1995-2023  Timo Kokkonen
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
